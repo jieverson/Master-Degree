@@ -8,6 +8,7 @@
 *.log
 *.gz
 *.toc
+*.out
 
 # Compiled source #
 ###################
