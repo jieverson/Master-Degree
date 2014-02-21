@@ -1,0 +1,1 @@
+Using classic Q-Learning, egreedy, with learning-rate = 0.5, exploration rate = 0.25 and Q values started in 0.

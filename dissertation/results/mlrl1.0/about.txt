@@ -1,0 +1,1 @@
+Using Meta-Level Reasoning, egreedy, starting with learning-rate 0.5 and Q values 0.

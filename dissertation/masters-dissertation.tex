@@ -1,0 +1,144 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[english,twoside]{pucrs-ppgcc}
+
+%----------------------------------------------------------------
+% Coloque seus pacotes abaixo.
+% 
+% Pacotes e opções já incluídas automaticamente (.cls):
+%
+% \RequirePackage[T1]{fontenc}[2005/09/27]
+% \RequirePackage[utf8x]{inputenc}[2008/03/30]
+% \RequirePackage[english,brazil]{babel}[2008/07/06]
+% \RequirePackage[a4paper]{geometry}[2010/09/12]
+% \RequirePackage{textcomp}[2005/09/27]
+% \RequirePackage{lmodern}[2009/10/30]
+% \RequirePackage{indentfirst}[1995/11/23]
+% \RequirePackage{setspace}[2000/12/01]
+% \RequirePackage{textcase}[2004/10/07]
+% \RequirePackage{float}[2001/11/08]
+% \RequirePackage{amsmath}[2000/07/18]
+% \RequirePackage{amssymb}[2009/06/22]
+% \RequirePackage{amsfonts}[2009/06/22]
+% \RequirePackage{url}
+% \RequirePackage[table]{xcolor}[2007/01/21]
+%----------------------------------------------------------------
+
+\usepackage{comment}
+\usepackage[pdftex]{graphicx}
+%\usepackage{epstopdf}
+%\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[implicit=false]{hyperref}
+
+%%% The "real" document content comes below...
+
+\author{Jiéverson Maissiat}
+
+\title{META-LEVEL REASONING IN REINFORCEMENT LEARNING}
+      {META-LEVEL REASONING IN REINFORCEMENT LEARNING}
+
+%----------------------------------------------------------------
+% Opções para o tipo de trabalho (OBRIGATÓRIO)
+%----------------------------------------------------------------
+%\tipotrabalho{\monografia}  % Monografias em geral (e de "bônus": TCCs)
+%\tipotrabalho{\pep}         % Plano de estudo e pesquisa
+\tipotrabalho{\dissertacao} % Dissertação
+%\tipotrabalho{\ptese}       % Proposta de tese
+%\tipotrabalho{\tese}         % Tese
+
+\orientador{Felipe Meneguzzi}
+
+\begin{document} 
+
+\dedicatoria{To Caroline Seligman Froehlich}
+
+\epigrafe{There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable.There is another theory which states that this has already happened.} {Douglas Adams}
+
+\begin{agradecimentos}
+
+I would like to thanks to people who contributed, not just to this work, but also to the good time spent during my masters degree.
+
+First of all, to my advisor Felipe Meneguzzi for all support, help, insight and ideas, making it possible to end this work the way it is.
+
+To prof. Rafael Bordini for the valuable time dedicated during the course of this work.
+
+To prof. Avelino Francisco Zorzo for the encouragement to discover my own area of interest.
+
+To anonymous reviewers of SBGames 2013 whose feedback our paper allowing me to refine this work. 
+
+To BTHAI and BWAPI developers for creating and documenting the tools that have made this work possible.
+
+To Caroline Seligman Froehlich for showing me that it is always worth giving up what makes you unhappy to run after your dreams.
+
+To my parents Fernando Maissiat and Cerli Maissiat and my brother Jackson for providing me full support and good family structure.
+
+\end{agradecimentos}
+
+\begin{abstract}{artificial intelligence, learning, reinforcement learning, high level strategy, starcraft, games}
+Reinforcement learning (RL) is a technique to compute an optimal policy in stochastic settings whereby, actions from an initial policy are simulated (or directly executed) and the value of a state is updated based on the immediate rewards obtained as the policy is executed. 
+Existing efforts model opponents in competitive games as elements of a stochastic environment and use RL to learn policies against such opponents. 
+In this setting, the rate of change for state values monotonically decreases over time, as learning converges. 
+Although this modeling assumes that the opponent strategy is static over time, such an assumption is too strong when human opponents are possible. 
+Consequently, in this work, we develop a meta-level RL mechanism that detects when an opponent changes strategy and allows the state-values to ``deconverge'' in order to learn how to play against a different strategy. 
+We validate this approach empirically for high-level strategy selection in the \textit{Starcraft: Brood War} game.
+\end{abstract}
+
+\begin{resumo}{inteligência artificial, aprendizado, reinforcement learning, high-level strategy, starcraft, jogos}
+Reinforcement learning (RL) é uma técnica para encontrar uma política ótima em ambientes estocásticos onde, as ações de uma política inicial são simuladas (ou executadas diretamente) e o valor de um estado é atualizado com base nas recompensas obtida imediatamente após a execução de cada ação.
+Existem trabalhos que modelam adversários em jogos competitivos em ambientes estocásticos e usam RL para aprender políticas contra esses adversários.
+Neste cenário, a taxa de mudança de valores do estado monotonicamente diminui ao longo do tempo, de acordo com a convergencia do aprendizado.
+Embora este modelo pressupõe que a estratégia do adversário é estática ao longo do tempo, tal suposição é muito forte quando os adversários podem ser humanos.
+Conseqüentemente, neste trabalho, é desenvolvido um mecanismo de meta-level RL que detecta quando um oponente muda de estratégia e permite que taxa de aprendizado almente, a fim de aprender a jogar contra uma estratégia diferente.
+Esta abordagem é validada de forma empírica, utilizando seleção de estratégias de alto nível no jogo \textit{Starcraft: Brood War}.
+\end{resumo}
+
+\listoffigures
+%\listoftables
+\listofalgorithms
+%\listofacronyms
+%\listofabbreviations
+%\listofsymbols
+\tableofcontents
+
+\input{masters-dissertation-introduction}
+
+\input{masters-dissertation-background}
+
+\input{masters-dissertation-starcraft}
+
+\input{masters-dissertation-contribution}
+
+\input{masters-dissertation-results}
+
+\input{masters-dissertation-conclusion}
+
+%----------------------------------------------------------------
+% Aqui vai a bibliografia. Existem dois estilos de citação: use
+% 'ppgcc-alpha' para citações do tipo [Abc+] ou [XYZ] (em ordem
+% alfabética na bibliografia), e 'ppgcc-num' para citações
+% numéricas do tipo [1], [20], etc., em ordem de referência.
+%----------------------------------------------------------------
+\bibliographystyle{ppgcc-alpha}
+%\bibliographystyle{ppgcc-num}
+\bibliography{cites}
+
+%----------------------------------------------------------------
+% Após \appendix, se iniciam os capítulos de Apêndice, com
+% numeração alfabética.
+%----------------------------------------------------------------
+%\appendix
+%\chapter{Meu primeiro apêndice}
+%\chapter{My second appendix}
+
+%----------------------------------------------------------------
+% Aqui vão os "capítulos" de anexos. Cada anexo deve
+% ser considerado um capítulo.
+%----------------------------------------------------------------
+%\anexos
+%\chapter{Meu primeiro anexo}
+%\chapter{My second attachment}
+
+% Happy Ending
+\end{document}

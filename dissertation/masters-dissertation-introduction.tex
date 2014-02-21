@@ -1,0 +1,32 @@
+%!TEX root = masters-dissertation.tex
+\chapter{Introduction}
+\label{chapter:introduction}
+
+For thousands of years, humans have tried to understand their own thinking and reasoning.
+It is difficult to understand how we are able to perceive, understand, reason, act, and finally learn.
+Artificial Intelligence (AI) is trying to understand it as well as building agents with these capabilities.
+In computer games we have basically the same problem.
+It is dificult to make an agent play a game from the point of view of a regular player with promising results representing a challenge~\cite{taylor2011teachingmario,mohan2010ralationalmario}.
+When humans play against other humans, it is usually difficult to forecast each individual player's actions and strategies.
+However, when playing against a computer, humans often start to understand the pre-programmed strategies after a few matches.
+Solving this problem is interesting because it can make games more dynamic and less predictable.
+
+Reinforcement learning is a technique often used to generate an optimal (or near-optimal) agent in a stochastic environment in the absence of knowledge about the reward function of this environment and the transition function~\cite{kaelbling1996reinforcement}. 
+A number of algorithms and strategies for reinforcement learning have been proposed in the literature~\cite{stone2005reinforcement,graepel2004learningfight}, which have shown to be effective at learning policies in such environments. 
+Some of these algorithms have been applied to the problem of playing computer games from the point of view of a regular player with promising results~\cite{taylor2011teachingmario,mohan2010ralationalmario}. 
+However, traditional reinforcement learning often assumes that the environment remains static throughout the learning process while the learning algorithm converges.
+Under the assumption that the environment remains static over time, when the algorithm converges, the optimal policy has been computed, and no more learning is necessary. 
+Therefore, a key element of RL algorithms in static environments is a learning-rate --- parameter that defines the intensity of the learning process --- that is expected to decrease monotonically until the learning converges. 
+However, this assumption is clearly too strong when part of the environment being modeled includes an opponent player that can adapt its strategy over time. 
+
+In this work, we apply meta-level reasoning~\cite{cox2007metareasoning,ulam2008combining} to reinforcement learning~\cite{schweighofer2003meta} and allow an agent to react to changes of strategy by the opponent.
+Our technique relies on using another reinforcement learning component to vary the learning-rate as negative rewards are obtained after the policy converges, allowing our player agent to deal with changes in the environment induced by changing strategies of competing players.
+To collect results, we set up an environment for tests in well known game StarCraft: Brood War.
+The first part of this work was submitted and is already published at SBGames 2013~\cite{mypaper}.
+Our experiments have shown that by using our proposed meta-level reasoning, the agent start dealing with environment changes earlier than with already known methods.
+
+This work is organized as follows: 
+in Chapter~\ref{chapter:background} we review the main concepts used in required for this work:
+the different kinds of environments (\ref{sec:environments}), some concepts of machine learning (\ref{sec:machine-learning}) and reinforcement learning (\ref{sec:rl}); 
+in Chapter~\ref{chapter:sc} we explain the StarCraft game domain, and in Chapter~\ref{chapter:meta-rl} we describe our solution.
+Finally, we demonstrate the effectiveness of our algorithms through empirical experiments and results in Chapter~\ref{chapter:results}.

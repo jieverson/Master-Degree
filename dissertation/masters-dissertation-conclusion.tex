@@ -1,0 +1,16 @@
+%!TEX root = masters-dissertation.tex
+\chapter{Final Thoughts}
+\label{chapter:conclusion}
+
+In this work we have developed a reinforcement learning mechanism for high-level strategies in RTS games that is able to cope with the opponent abruptly changing its play style.
+To accomplish this, we have applied meta-level reasoning techniques over the already known RL strategies, so that we learn how to vary the parameters of reinforcement learning allowing the algorithm to ``de-converge'' when necessary.
+The aim of our technique is to learn when the agent needs to learn faster or slower. 
+Although we have obtained promising initial results, our approach was applied just for high-level strategies, and the results were collected using only the strategies built into the BTHAI library for Starcraft control.
+To our knowledge, ours is the first approach to mix meta-level reasoning and reinforcement learning that applies RL to control the parameters of RL.
+Furthermore, we have modified the way exploration policy is done, introducing a new concept to vary exploration policy using learning-rate.
+
+Results have shown that this meta-level strategy can be a good solution to find high-level strategies.
+The meta-learning algorithm we developed is not restricted to StarCraft and can be used in any game in which the choice of different strategies may result in different outcomes (victory or defeat), based on the play style of the opponent. 
+
+In the future, we aim to apply this approach to low-level strategies, such as learning detailed \textit{build orders} or to micro-manage battles.
+Given our initial results, we believe that meta-level reinforcement learning is a useful technique in game AI control that can be used on other games, at least at a strategic level.
