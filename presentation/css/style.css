@@ -189,6 +189,12 @@ h1.chapter{
 	margin-left: 50px;
 }
 
+.border{
+	background: white;
+	border-radius: 25px;
+	padding: 12px;
+}
+
 /*
 .sc img{
 	width: 200px;
