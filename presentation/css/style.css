@@ -2,4 +2,127 @@
     font-size: 64px;
     line-height: 72px;
     margin-top: 100px;
+    text-align: center;
+}
+
+.slide h2 {
+    font-size: 36px;
+    margin-top: 60px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 64px;
+}
+
+.center{
+	text-align: center;
+}
+
+.right{
+	text-align: right;
+}
+
+h1.chapter{
+	font-size: 96px;
+	font-weight: bold;
+    text-align: center;
+}
+
+.slide h1.chapter{
+	margin-top: 250px;
+}
+
+img.rl{
+	width: 800px;
+}
+
+#q-value {
+	width: 800px;
+	font-size: 35px;
+}
+
+#q-value b{
+	display: block;
+    font-size: 150px;
+    line-height: 150px;
+}
+
+#q-value span{
+	display: block;
+	font-size: 100px;
+}
+
+#q-value span b{
+	display: inline;
+	text-align: right;
+	font-size: 200px;
+}
+
+.formula-2.future,
+.formula-3.future,
+.formula-4.future{
+	visibility: collapse;
+}
+
+.formula-2 pre,
+.formula-3 pre{
+	text-align: right;
+}
+
+#parameter-control {
+	width: 500px;
+}
+
+#learning-rate-question,
+#learning-rate-answer{
+	width: 500px;
+}
+
+#learning-rate-question b{
+	font-size: 60px;
+}
+
+#learning-rate-answer.future {
+	visibility: collapse;
+}
+
+#learning-rate-answer strong {
+	font-size: 80px;
+}
+
+/*
+#ing.present .rotating {
+    -webkit-transform: rotate(-10deg);
+    -moz-transform:    rotate(-10deg);
+    -ms-transform:     rotate(-10deg);
+    -o-transform:      rotate(-10deg);
+    transform:         rotate(-10deg);
+
+    -webkit-transition-delay: 0.25s;
+    -moz-transition-delay:    0.25s;
+    -ms-transition-delay:     0.25s;
+    -o-transition-delay:      0.25s;
+    transition-delay:         0.25s;
+}
+*/
+
+.hint {
+	bottom: 100px;
+}
+
+.impress-on-home .hint {
+    opacity: 1;
+
+    -webkit-transform: translateY(0px);
+    -moz-transform:    translateY(0px);
+    -ms-transform:     translateY(0px);
+    -o-transform:      translateY(0px);
+    transform:         translateY(0px);
+
+    -webkit-transition: opacity 1s 5s, -webkit-transform 0.5s 4.5s;
+    -moz-transition:    opacity 1s 5s,    -moz-transform 0.5s 4.5s;
+    -ms-transition:     opacity 1s 5s,     -ms-transform 0.5s 4.5s;
+    -o-transition:      opacity 1s 5s,      -o-transform 0.5s 4.5s;
+    transition:         opacity 1s 5s,         transform 0.5s 4.5s;
 }
