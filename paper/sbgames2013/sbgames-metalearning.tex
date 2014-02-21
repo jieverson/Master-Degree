@@ -1,0 +1,109 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{epstopdf}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{flushend}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions for comments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Marginpar redefinition
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\footnotesize #1]%
+{\raggedright\footnotesize #1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mparhack}
+\setlength{\marginparsep}{0.2cm}
+\setlength{\marginparwidth}{1.8 cm}
+\newenvironment{comment}[2][Note]{\dag\marginpar{\tiny{\textbf{#1:} {#2}}}}
+%\newenvironment{comment}[2][Note]{}
+%\newenvironment{comment}[2][Note]{\footnote{\textbf{#1:} #2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Meta commenting macros from Felipe
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[usenames]{xcolor}
+\usepackage{hyperref}
+
+\ifx\final\undefined
+	% 
+	\ifx\todo\undefined
+	\newcommand\todo[1]{~\newline{\color{red}\framebox[\columnwidth]{\parbox{.95\columnwidth}{TODO: #1}}}~\newline}
+	\fi
+	% 
+	\newcommand{\rev}[1]{\noindent\fbox{\parbox{.98\columnwidth}{\underline{NEEDS REFINING:}\\#1}}\\}
+	\newcommand{\ask}[2]{\noindent{\bf (@#1:}~#2{\bf)}}
+	\newcommand{\say}[2]{\noindent\fbox{\parbox{.98\columnwidth}{\noindent{\sc #1:}\\#2}}\\}
+\else
+	\newcommand{\rev}[1]{}
+	\newcommand{\ask}[2]{}
+	\newcommand{\say}[2]{}
+	\newcommand\todo[1]{}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\title{Adaptive High-Level Strategy Learning in StarCraft}
+
+\author{\IEEEauthorblockN{Jiéverson Maissiat}
+ \IEEEauthorblockA{
+ Faculdade de Informática\\
+ Pontifícia Universidade Católica\\
+ do Rio Grande do Sul (PUCRS)\\
+ Email: contact@jieverson.com}
+ \and
+ \IEEEauthorblockN{Felipe Meneguzzi}
+ \IEEEauthorblockA{
+ Faculdade de Informática\\
+ Pontifícia Universidade Católica\\
+ do Rio Grande do Sul (PUCRS)\\
+ Email: felipe.meneguzzi@pucrs.br}
+}
+
+%\author{
+%	Paper \# 118825
+%	\vspace*{6em}
+%}
+
+\maketitle
+
+\begin{abstract}
+
+Reinforcement learning (RL) is a technique to compute an optimal policy in stochastic settings whereby, actions from an initial policy are simulated (or directly executed) and the value of a state is updated based on the immediate rewards obtained as the policy is executed. 
+Existing efforts model opponents in competitive games as elements of a stochastic environment and use RL to learn policies against such opponents. 
+In this setting, the rate of change for state values monotonically decreases over time, as learning converges. 
+Although this modeling assumes that the opponent strategy is static over time, such an assumption is too strong when human opponents are possible. 
+Consequently, in this paper, we develop a meta-level RL mechanism that detects when an opponent changes strategy and allows the state-values to ``deconverge'' in order to learn how to play against a different strategy. 
+We validate this approach empirically for high-level strategy selection in the \textit{Starcraft: Brood War} game.
+
+\end{abstract}
+
+%\IEEEpeerreviewmaketitle
+
+\input{sbgames-metalearning-introduction}
+
+\input{sbgames-metalearning-background}
+
+\input{sbgames-metalearning-starcraft}
+
+\input{sbgames-metalearning-contribution}
+
+\input{sbgames-metalearning-results}
+
+\input{sbgames-metalearning-conclusion}
+
+
+\bibliographystyle{abbrv}
+\bibliography{cites}
+
+% that's all folks
+\end{document}

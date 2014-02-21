@@ -1,0 +1,175 @@
+%!TEX root = sbgames-metalearning.tex
+\section{Background}
+\label{sec:background}
+
+
+
+\subsection{Environments}
+\label{subsec:environments}
+
+In the context of multi-agent systems, the environment is the world in which agents act.
+The design of an agent-based system must take into consideration the environment in which the agents are expected to act, since it determines which AI techniques are needed for the resulting agents to accomplish their design goals. 
+Environments are often classified according to the following attributes~\cite{russell1995artificial}:  observability, determinism, dynamicity, discreteness, and the number of agents. 
+
+The first way to classify an environment is related to its observability. 
+An environment can be unobservable, partially observable, or fully observable. 
+For example, the real world is partially observable, since each person can only perceive what is around his or herself, and usually only artificial environments are fully observable.
+% 
+The second way to classify an environment, is about its determinism.
+In general, an environment can be classified as stochastic or deterministic.
+In deterministic environments, an agent that performs an action $a$ in a state $s$ always result in a transition to the same state $s'$, no matter how many times the process is repeated, whereas in stochastic environments there can be multiple possible resulting states $s'$, each of which has a specific transition probability.
+% 
+The third way to classify an environment is about its dynamics. 
+Static environments do not change their transition dynamics over time, while dynamic environments may change their transition function over time. 
+% 
+Moreover an environment can be classified as continuous or discrete.
+Discrete environments have a countable number of possible states, while continuous environments have an infinite number of states.
+A good example of discrete environment is a chessboard, while a good example of continuous environment is a real-world football pitch. 
+% 
+Finally, environments are classified by the number of agents acting concurrently, as either single-agent or multi-agent. 
+In single-agent environments, the agent operates by itself in the system (no other agent modifies the environment concurrently) while in multi-agent environments agents can act simultaneously, competing or cooperating with each other. 
+A crossword game is a single-agent environment whereas a chess game is a multi-agent environment, where  two agents take turns acting in a competitive setting.
+
+
+
+\subsection{Machine Learning}
+\label{subsec:machine-learning}
+
+An agent is said to be learning if it improves its performance after observing the world around it~\cite{russell1995artificial}. 
+Common issues in the use of learning in computer games include questions such as whether to use learning at all, or wether or not insert improvement directly into the agent code if it is possible to improve the performance of an agent. 
+Russell and Norvig~\cite{russell1995artificial} state that it is not always possible or desirable, to directly code improvements into an agent's behavior for a number of reasons. First, in most environments, it is difficult to enumerate all situations an agent may find itself in. Furthermore, in dynamic environments, it is often impossible to predict all the changes over time. And finally, the programmer often has no idea of an algorithmic solution to the problem. 
+
+Thus, in order to create computer programs that change behavior with experience, learning algorithms are employed. 
+There are three main methods of learning, depending on the feedback available to the agent. 
+In \emph{supervised learning}, the agent approximates a function of input/output from observed examples. 
+In \emph{unsupervised learning}, the agent learns patterns of information without knowledge of the expected classification. 
+In \emph{reinforcement learning}, the agent learns optimal behavior by acting on the environment and observing/experiencing rewards and punishments for its actions. 
+In this paper, we focus in reinforcement learning technique. 
+
+
+
+\subsection{Reinforcement Learning}
+\label{subsec:rl}
+
+When an agent carries out an unknown task for the first time, it does not know exactly whether it is making good or bad decisions. 
+Over time, the agent makes a mixture of optimal, near optimal, or completely suboptimal decisions. 
+By making these decisions and analyzing the results of each action, it can learn the best actions at each state in the environment, and eventually discover what the best action for each state is. 
+
+Reinforcement learning (RL) is a learning technique for agents acting in a stochastic, dynamic and partially observable environments, observing the reached states and the received rewards at each step~\cite{sutton1998reinforcement}. 
+Figure~\ref{fig:rl} illustrates the basic process of reinforcement learning, where the agent performs actions, and learns from their feedback. 
+An RL agent is assumed to select actions following a mapping of each possible environment state to an action. 
+This mapping of states to actions is called a \emph{policy}, and reinforcement learning algorithms aim to find the \emph{optimal policy} for an agent, that is, a policy that ensure long term optimal rewards for each state. 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=250px]{images/rl}
+\caption{Model to describe the process of reinforcement learning.}
+\label{fig:rl}
+\end{figure}
+
+RL techniques are divided into two types, depending on whether the agent changes acts on the knowledge gained during policy execution~\cite{russell1995artificial}. 
+In \emph{passive RL}, the agent simply executes a policy using the rewards obtained to update the \emph{value} (long term reward) of each state, whereas in \emph{active RL}, the agent uses the new values to change its policy on every iteration of the learning algorithm. 
+A passive agent has fixed policy: at state $s$, the agent always performs the same action $a$.
+Its mission is to learn how good its policy is $-$ to learn the utility of it.
+An active agent has to decide what actions to take in each state:
+it uses the information obtained by reinforcement learning to improve its policy. 
+By changing its policy in response to learned values, an RL agent might start exploring different parts of the environment. 
+Nevertheless, the initial policy still biases the agent to visit certain parts of the environment~\cite{russell1995artificial}, so an agent needs to have a policy to balance the use of recently acquired knowledge about visited states with the exploration of unknown states in order to approximate the optimal values~\cite{ghory2004boardgames}. 
+
+
+
+\subsubsection{Q-Learning}
+\label{subsubsec:ql}
+
+Depending on the assumptions about the agent knowledge prior to learning, different algorithms are used. 
+When the rewards and the transitions are unknown, one of the most popular reinforcement learning techniques is \textit{Q-learning}. 
+This method updates the value of a pair of state and action --- named state-action pair, $Q(s,a)$ ---
+after each action performed using the immediately reward. 
+When an action $a$ is taken at a state $s$, the value of state-action pair, or Q-value,
+is updated using the following adjustment function~\cite{amato2010highlevel}.
+% 
+	$$Q(s,a) \leftarrow Q(s,a) + \alpha[r + \gamma max_{a' \in A(s')}Q(s',a') - Q(s,a)]$$
+% 
+
+Where, 
+\begin{itemize}
+\item $s$ represents the current state of the world;
+\item $a$ represents the action chosen by the agent;
+\item $ Q(s,a) $ represents the value obtained the last time action $a$ was executed at state $s$.
+This value is often called Q-value.
+\item $r$ represents the reward obtained after performing action $a$ in state $s$;
+\item $s'$ represents the state reached after performing action $a$ in state $s$;
+\item $a' \in A(s')$ represents a possible action from state $s'$;
+\item $max_{a' \in A(s')}Q(s',a')$ represents the maximum Q-value that can be obtained from the state $s'$, independently of the action chosen;
+\item $\alpha$ is the learning-rate, which determines the weight of new information over what the agent already knows --- a factor of $0$ prevents the agent from learning anything (by keeping the Q-value identical to its previous value) whereas a factor of $1$ makes the agent consider all newly obtained information;
+\item $\gamma$ is the \textit{discount factor}, which determines the importance of future rewards --- a factor of $0$ makes the agent opportunistic~\cite{schweighofer2003meta} by considering only the current reward, while a factor of $1$ makes the agent consider future rewards, seeking to increase their long-term rewards;
+\end{itemize}
+
+Once the Q-values are computed, an agent can extract the best policy known so far ($\pi^{\approx}$) by selecting the actions that yield the highest expected rewards using the following rule:
+$$\pi^{\approx}(s) = \arg\max_{a}Q(s,a) $$
+
+In dynamic environments, Q-learning does not guarantee convergence to the optimal policy.
+This occurs because the environment is always changing and demanding that the agent adapts to new transition and reward functions.
+However, Q-learning has been proven efficient in stochastic environments 
+even without convergence~\cite{sandholm1996multiagent,tesauro2002pricing,amato2010highlevel}.
+In multi-agent systems where the learning agent models the behavior of all other agents as a stochastic environment (an MDP), Q-learning provides the optimal solution when these other agents
+-- or players in the case of human agents in computer games --- do not change their policy choice. 
+
+
+
+\subsubsection{Exploration Policy}
+\label{subsubsec:exploration}
+
+So far, we have considered active RL agents that simply use the knowledge obtained so far to compute an optimal policy. 
+However, as we saw before, the initial policy biases the parts of the state-space through which an agent eventually explores, possibly leading the learning algorithm to converge on a policy that is optimal for the states visited so far, but not optimal overall (a local maximum). 
+Therefore, active RL algorithms must include some mechanism to allow an agent to choose different actions from those computed with incomplete knowledge of the state-space. 
+Such a mechanism must seek to balance exploration of unknown states and exploitation of the currently available knowledge, allowing the agent both to take advantage of actions he knows are optimal, and exploring new actions~\cite{amato2010highlevel}. 
+
+In this paper we use an exploration mechanism known as $\epsilon$-greedy~\cite{rodrigues2009dynamic}. 
+This mechanism has a probability $\epsilon$ to select a random action, and a probability $1 - \epsilon$ to select the optimal action known so far --- which has the highest Q-value.
+In order to make this selection we define a probability vector over the action set of the agent for each state, and use this probability vector to bias the choice of actions towards unexplored states. 
+In the probability vector $x = (x_1, x_2, ..., x_n)$, the probability $x_i$ to choose the action $i$ is given by: 
+\[
+  x_i = \left\{
+  \begin{array}{ll}
+    (1 - \epsilon) + (\epsilon / n), & \mbox{if $Q$ of $i$ is the highest} \\
+    \epsilon / n, & \mbox{otherwise}
+  \end{array}\right.
+\]
+
+where $n$ is the number of actions in the set.
+
+
+
+\subsection{Meta-Level Reasoning}
+\label{subsec:meta-reasoning}
+
+Traditionally, \textit{reasoning} is modeled as a decision cycle, in which the agent perceives environmental stimulus and responds to it with an appropriate action. 
+The result of the actions performed in the environment (\textit{ground-level})
+is perceived by the agent (\textit{object-level}), which responds with a new action,
+and so the cycle continues. 
+This reasoning cycle is illustrated in Figure~\ref{fig:reasoning}~\cite{cox2007metareasoning}. 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=230px]{images/reasoning}
+\caption{Common cycle of perception and actions choice.}
+\label{fig:reasoning}
+\end{figure}
+
+\textit{Meta-reasoning} or \textit{meta-level reasoning} is the process of explicitly reasoning about this reasoning cycle. 
+It consists of both the control, and monitoring of the object-level reasoning, allowing an agent to adapt the reasoning cycle over time, as illustrated in Figure~\ref{fig:metareasoning}. 
+This new cycle represents a high level reflection about its own reasoning cycle. 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=230px]{images/metareasoning}
+\caption{Adding meta-level reasoning to the common cycle of perception and choice of actions.}
+\label{fig:metareasoning}
+\end{figure}
+
+When meta-level reasoning is applied to learning algorithms, this gives rise to a new term: \textit{meta-learning}~\cite{schweighofer2003meta, doya2002metalearning}.
+Meta-learning represents the concept of learning to learn, and the meta-learning level is generally responsible for controlling the parameters of the learning level.
+While learning at the object-level is responsible for accumulating experience about some task (e.g, take decisions in a game, medical diagnosis, fraud detection, etc.), learning at the meta-level is responsible for accumulating experience about learning algorithm itself. 
+If learning at object-level is not succeeding in improving or maintaining performance, the meta-level learner takes the responsibility to adapt the object-level, in order to make it succeed.
+In other words, meta-learning helps solve important problems in the application of machine learning algorithms~\cite{vilalta2004using}, especially in dynamic environments.

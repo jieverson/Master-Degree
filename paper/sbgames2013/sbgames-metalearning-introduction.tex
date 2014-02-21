@@ -1,0 +1,20 @@
+%!TEX root = sbgames-metalearning.tex
+\section{Introduction}
+\label{sec:introduction}
+
+Reinforcement learning is a technique often used to generate an optimal (or near-optimal) agent in a stochastic environment in the absence of knowledge about the reward function of this environment and the transition function~\cite{kaelbling1996reinforcement}. 
+A number of algorithms and strategies for reinforcement learning have been proposed in the literature~\cite{stone2005reinforcement,graepel2004learningfight}, which have shown to be effective at learning policies in such environments. 
+Some of these algorithms have been applied to the problem of playing computer games from the point of view of a regular player with promising results~\cite{taylor2011teachingmario,mohan2010ralationalmario}. 
+However, traditional reinforcement learning often assumes that the environment remains static throughout the learning process so that when the learning algorithm converges. 
+Under the assumption that the environment remains static over time, when the algorithm converges, the optimal policy has been computed, and no more learning is necessary. 
+Therefore, a key element of RL algorithms in static environments is a learning-rate parameter that is expected to decrease monotonically until the learning converges. 
+However, this assumption is clearly too strong when part of the environment being modeled includes an opponent player that can adapt its strategy over time. 
+In this paper, we apply the concept of meta-level reasoning~\cite{cox2007metareasoning,ulam2008combining} to reinforcement learning~\cite{schweighofer2003meta} and allow an agent to react to changes of strategy by the opponent.
+Our technique relies on using another reinforcement learning component to vary the learning rate as negative rewards are obtained after the policy converges, allowing our player agent to deal with changes in the environment induced by changing strategies of competing players.
+
+This paper is organized as follows: in Section~\ref{sec:background} we review the main concepts used in required for this paper:
+the different kinds of environments (\ref{subsec:environments}), 
+some concepts of machine learning (\ref{subsec:machine-learning}) and
+reinforcement learning (\ref{subsec:rl}); in Section~\ref{sec:sc} we explain the StarCraft game domain, 
+and in Section~\ref{sec:meta-rl} we describe our solution.
+Finally, we demonstrate the effectiveness of our algorithms through empirical experiments and results in Section~\ref{sec:results}.
