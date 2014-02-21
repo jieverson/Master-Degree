@@ -16,11 +16,19 @@ h3 {
 }
 
 .center{
-	text-align: center;
+	text-align: center!important;
 }
 
 .right{
-	text-align: right;
+	text-align: right!important;
+}
+
+.justify{
+	text-align: justify!important;
+}
+
+.step img{
+	margin-top: 20px;
 }
 
 h1.chapter{
@@ -33,7 +41,7 @@ h1.chapter{
 	margin-top: 250px;
 }
 
-img.rl{
+#reinforcement-learning img{
 	width: 800px;
 }
 
@@ -89,6 +97,101 @@ img.rl{
 
 #learning-rate-answer strong {
 	font-size: 80px;
+}
+
+.reasoning {
+	height: 500px;
+}
+.reasoning img{
+	margin-left: 120px;
+}
+
+#reasoning img{
+	height: 200px;
+}
+
+#meta-reasoning.future {
+    visibility: collapse;
+}
+
+#complete-reasoning,
+#implemented-reasoning,
+#rl-in-reasoning,
+#egreedy-in-reasoning{
+	visibility: collapse;
+}
+
+#complete-reasoning.present,
+#implemented-reasoning.present,
+#rl-in-reasoning.present,
+#egreedy-in-reasoning.present{
+	visibility: visible;
+}
+
+#meta-reasoning img{
+	height: 130px;
+	margin-top: 220px;
+}
+
+#complete-reasoning img,
+#implemented-reasoning img,
+#rl-in-reasoning img,
+#egreedy-in-reasoning img{
+	height: 330px;
+}
+
+#rl-in-reasoning img{
+	margin-left: -83px;
+}
+
+#egreedy-in-reasoning img{
+	margin-left: -56px;
+}
+
+#algorithm-rl img {
+	width: 800px;
+}
+
+#implemented-egreedy {
+	width: 800px;
+	font-size: 32px;
+}
+#implemented-egreedy p{
+	text-align: justify;
+}
+#implemented-egreedy h3{
+	font-size: 96px;
+	text-align: right;
+}
+#implemented-egreedy h4{
+	text-align: right;
+	font-size: 64px;
+}
+#implemented-egreedy b{
+	font-size: 46px;
+}
+#code-injection strong {
+	font-size: 64px;
+}
+
+#approach{
+	font-size: 32px;
+}
+#approach strong {
+	font-size: 48px;
+}
+
+#strategies{
+	width: 600px;
+}
+#strategies ul{
+	list-style-type:initial;
+	margin-left: 50px;
+}
+
+/*
+.sc img{
+	width: 200px;
 }
 
 /*
