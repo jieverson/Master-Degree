@@ -38,10 +38,10 @@ A crossword game is a single-agent environment whereas a chess game is a multi-a
 Agents need to make careful decisions, since today's decisions can impact on tomorrow's and tomorrow's on the next day.
 Markov Decision Process (MDP), also known as stochastic control problems~\cite{puterman1994markov}, is a model used to represent sequential decision making when its consequences are not deterministic.
 That is, MDP is a mathematical model used for modeling decision making where choices of actions are partly random and partly under the control of an agent.
-An MDP is represented by a tuple $\langle S, A, T, R\rangle$~\cite{graepel2004learningfight, taylor2011teachingmario} consisting of
+An MDP is represented by a tuple $\langle S, A, T, R\rangle$~\cite{graepel2004learningfight, taylor2011teachingmario} consisting of:
 
 1. a \textit{state space S} is a finite set of states $s \in S$.
-You could say that the state space is a set of bindings of values to variables.
+We could say that the state space is a set of bindings of values to variables.
 In computer games, one state represents a set of characteristics about the game, such as:
 the character is on the ground, is jumping, is facing a wall, is carrying certain items, the current life (health bar) from the character, etc.;
 
@@ -56,7 +56,7 @@ an action is performed by the agent;
 
 4. a \textit{reward function} $R : S \times A \times S' \mapsto \mathbb{R}$.
 The reward is one of the key elements in the learning process, since it describes
-the \textit{feedback} the agent use to improve himself.
+the \textit{feedback} the agent uses to improve itself.
 In fighting games~\cite{graepel2004learningfight}, for example, the reward could be given
 by the difference from the values of the life bar between both characters, after an action is performed;
 
@@ -78,22 +78,19 @@ is $-1$.
 \end{figure}
 
 An MDP is a mapping from states to actions that tells an agent what to do at each state~\cite{bellman1957dynamic,dreyfus2002richard}.
-MDPs can be used to find optimal policies --- i.e., a kind a mapping of each state to the action that yields the highest long-term reward.
+MDPs can be used to find optimal policies, i.e., a kind a mapping of each state to the action that yields the highest long-term reward.
 An optimal policy~\cite{morin1982monotonicity, mitten1964composition} is the policy that 
 maximizes the reward obtained for each state/action~\cite{guelpeli2003utilizaccao}.
-An optimal policy is a policy that, for each state, sets the action whose expected reward is maximized at infinite time.
-The Bellman's Principle of Optimality states that 
-all parts of an optimal solution must also be optimal~\cite{morin1982monotonicity}:
+The Bellman's Principle of Optimality states that all parts of an optimal solution must also be optimal~\cite{morin1982monotonicity}:
 \textit{
 ``An optimal policy has the property that, whatever the state and the initial decision,
 upcoming decisions from the resulting state must also be an optimal policy''}~\cite[p. 83]{bellman1957dynamic}.
 
-The Bellman equation describes the optimal policy for an MDP whose parameters are known 
---- ie, all states, actions, and transitions probabilities are known and are represented by:
-\[
+The Bellman equation describes the optimal policy for an MDP whose parameters are known, i.e., all states, actions, and transitions probabilities are known and are represented by Equation~\ref{eq:mdp}, where:
+\begin{equation} \label{eq:mdp}
 	V(s) \leftarrow \left[max_a \gamma \sum_{s'}^n P(s'|s,a) * V(s')\right] + R(s)
-\]
-Where,
+\end{equation}
+
 \begin{itemize}
 \item $s$ represents a MDP's state;
 \item $a$ represents an action, responsible for the transition between the states of the MDP;
@@ -122,7 +119,7 @@ There are three main methods of learning, depending on the feedback available to
 In \emph{supervised learning}, the agent approximates a function of input/output from observed examples. 
 In \emph{unsupervised learning}, the agent learns patterns of information without knowledge of the expected classification. 
 In \emph{reinforcement learning}, the agent learns optimal behavior by acting on the environment and observing/experiencing rewards and punishments for its actions. 
-In this work, we focus in reinforcement learning technique. 
+In this work, we focus in reinforcement learning techniques.
 
 
 
@@ -152,7 +149,7 @@ Its mission is to learn how good its policy is --- to learn the utility of it.
 An active agent has to decide what actions to take in each state:
 it uses the information obtained by reinforcement learning to improve its policy. 
 By changing its policy in response to learned values, an RL agent might start exploring different parts of the environment. 
-Nevertheless, the initial policy still biases the agent to visit certain parts of the environment~\cite{russell1995artificial}, so an agent needs to have a policy to balance the use of recently acquired knowledge about visited states with the exploration of unknown states in order to approximate the optimal values~\cite{ghory2004boardgames}. 
+Nevertheless, the initial policy still biases the agent to visit certain parts of the environment~\cite{russell1995artificial}, so an agent needs to have a policy to balance the use of recently acquired knowledge about visited states with the exploration of unknown states in order to approximate the optimal utility values~\cite{ghory2004boardgames}. 
 
 
 
@@ -164,12 +161,11 @@ When the rewards and the transitions are unknown, one of the most popular reinfo
 This method updates the value of a pair of state and action --- named state-action pair, $Q(s,a)$ ---
 after each action performed using the immediately reward. 
 When an action $a$ is taken at a state $s$, the value of state-action pair, or Q-value,
-is updated using the following adjustment function~\cite{amato2010highlevel}.
-% 
-	$$Q(s,a) \leftarrow Q(s,a) + \alpha[r + \gamma max_{a' \in A(s')}Q(s',a') - Q(s,a)]$$
-% 
+is updated using the adjustment function~\cite{amato2010highlevel} shown in Equation~\ref{eq:qlearning}, where:
+\begin{equation} \label{eq:qlearning}
+	Q(s,a) \leftarrow Q(s,a) + \alpha[r + \gamma max_{a' \in A(s')}Q(s',a') - Q(s,a)]
+\end{equation}
 
-Where, 
 \begin{itemize}
 \item $s$ represents the current state of the world;
 \item $a$ represents the last action chosen by the agent;
@@ -180,11 +176,13 @@ This value is often called Q-value.
 \item $a' \in A(s')$ represents a possible action from state $s'$;
 \item $max_{a' \in A(s')}Q(s',a')$ represents the maximum Q-value that can be obtained from the state $s'$, independently of the action chosen;
 \item $\alpha$ is the learning-rate, which determines the weight of new information over what the agent already knows --- a factor of $0$ prevents the agent from learning anything (by keeping the Q-value identical to its previous value) whereas a factor of $1$ makes the agent consider all newly obtained information;
-\item $\gamma$ is the same \textit{discount factor} as in~\ref{sec:markov};
+\item $\gamma$ is the same \textit{discount factor} as in Section~\ref{sec:markov};
 \end{itemize}
 
-Once the Q-values are computed, an agent can extract the best policy known so far ($\pi^{\approx}$) by selecting the actions that yield the highest expected rewards using the following rule:
-$$\pi^{\approx}(s) = \arg\max_{a}Q(s,a) $$
+Once the Q-values are computed, an agent can extract the best policy known so far ($\pi^{\approx}$) by selecting the actions that yield the highest expected rewards using the Equation~\ref{eq:bestpolicy}:
+\begin{equation} \label{eq:bestpolicy}
+	\pi^{\approx}(s) = \arg\max_{a}Q(s,a)
+\end{equation}
 
 The complete algorithm for an exploratory Q-learning agent is show in~\ref{alg:Qlearning}.
 
@@ -207,10 +205,9 @@ The complete algorithm for an exploratory Q-learning agent is show in~\ref{alg:Q
 Q-learning converges to an optimal policy after visiting each state-action pair a sufficient number of times, but it often requires many learning episodes~\cite{watkins1992technical}.
 In dynamic environments, Q-learning does not guarantee convergence to the optimal policy since it is possible that the required number of leaning episodes never occurs.
 This occurs because the environment is always changing and demanding that the agent adapts to new transition and reward functions.
-However, Q-learning has been proven efficient in stochastic environments 
-even without convergence~\cite{sandholm1996multiagent,tesauro2002pricing,amato2010highlevel}.
-In multi-agent systems where the learning agent models the behavior of all other agents as a stochastic environment (an MDP), Q-learning provides the optimal solution when these other agents
--- or players in the case of human agents in computer games --- do not change their policy choice. 
+However, Q-learning has been proven efficient in stochastic environments, even without guaranteed convergence~\cite{sandholm1996multiagent,tesauro2002pricing,amato2010highlevel}.
+In multi-agent systems, where the learning agent models the behavior of all other agents as a stochastic environment (an MDP), Q-learning provides the optimal solution when these other agents
+--- or players in the case of human agents in computer games --- do not change their policy choice. 
 
 
 
@@ -218,16 +215,17 @@ In multi-agent systems where the learning agent models the behavior of all other
 \label{subsec:dynaq}
 
 Learning a model means to learn the transition probabilities, the reward values for each state and action, or both simultaneously.
-It is possible to find optimal policies when the parameters model are known.
-One can learn the parameters of a model through the simulation of a template --- this model can be evaluated by using passive reinforcement learning, as seen previously (Section~\ref{sec:rl}).
-Dyna-Q~\cite{sutton1991dyna} is an approach which first builds a correct model, then find the policies through this model~\cite{kaelbling1996reinforcement}.
-This approach first learns the parameters of a model and then uses this definition of parameters to calculate the optimal policy learned about the model~\cite{amato2010highlevel}.
+It is possible to find optimal policies when the parameters of the model are known.
+One can learn the parameters of a model through the simulation of a template.
+This model can be evaluated by using passive reinforcement learning, as seen previously (Section~\ref{sec:rl}).
+Dyna-Q~\cite{sutton1991dyna} is an approach that first builds a correct model, then finds the policies through this model~\cite{kaelbling1996reinforcement}.
+This approach first learns the parameters of a model, and then uses this definition of parameters to calculate the optimal policy learned about the model~\cite{amato2010highlevel}.
 
 Dyna-Q can use the model to generate learning experiences --- simulate the learning within a built model --- and learn the Q-values more quickly than simply applying Q-learning.
-The agent learns both model and Q-values through executing its actions on environment.
+The agent learns both the model and the Q-values through executing its actions on the environment.
 The model is used to simulate the environment and update the Q-values.
-The better the representation of model parameters, faster the convergence of learning will occur.
-The algorithm Dyna-Q operates learning the model at each step, and then applying the technique of Q-learning to learn the model's policy.
+The better the representation of model parameters, the faster the convergence of learning will occur.
+The algorithm Dyna-Q operates by learning the model at each step, and then applying the technique of Q-learning to learn the model's policy.
 
 \begin{algorithm}
 	\caption{Dyna-Q}
@@ -251,12 +249,16 @@ The algorithm Dyna-Q operates learning the model at each step, and then applying
 	\end{algorithmic}
 \end{algorithm}
 
-Dyna-Q is shown in Algorithm~\ref{alg:dynaQ}. The first step of Dyna-Q is to update the value of $Q$ using Q-learning.
-The transition probability ($updatePAverage$ function from the algorithm) is given by the number of times the agent has chosen action $a$ at state $s$ and reached state $s'$, divided by the number of times the agent was in state $s$ and chose the action $a$:
-\[ P(s'|s,a) = \frac{count(s,a,s')}{count(s,a)} \]
+Dyna-Q is shown in Algorithm~\ref{alg:dynaQ}. The first step of Dyna-Q is to update the value of the $Q-$values using Q-learning.
+The transition probability ($updatePAverage$ function from the algorithm, present in Equation~\ref{eq:p}) is given by the number of times the agent has chosen action $a$ at state $s$ and reached state $s'$, divided by the number of times the agent was in state $s$ and has chosen the action $a$:
+\begin{equation} \label{eq:p}
+	P(s'|s,a) = \frac{count(s,a,s')}{count(s,a)}
+\end{equation}
 
-The \textit{reward value}, is the average reward received ($updateRAverage$ function from the algorithm) after choose the action $a$ and reach the state $s$:
-\[ R(s,a) = \frac{count(s,a) * R(s,a) + r}{count(s,a) + 1} \]
+The \textit{reward value}, is the average reward received ($updateRAverage$ function from the algorithm, present in Equation~\ref{eq:r}) after choosing the action $a$ and reaching the state $s$:
+\begin{equation} \label{eq:r}
+	R(s,a) = \frac{count(s,a) * R(s,a) + r}{count(s,a) + 1}
+\end{equation}
 
 The loop \textit{for} is responsible for generating the model.
 The model simulates the specified number of iterations and the Q-values are updated according to its model.
@@ -264,7 +266,7 @@ First it chooses a state $s'$ that was previously visited ($randomPreviouslySeen
 After it chooses an action $a'$ that has already been performed on state $s'$ ($randomPreviouslyTakenA$ function).
 Based on this model, a new state $s''$ is simulated ($sampleFromModel$ function).
 Finally, the reward for executing action $a'$ at state $s'$ is given by $fromModel$ function of the algorithm, and these values are used to update the appropriate Q-value ($Q(s',a')$).
-For this, the algorithm uses Q-learning equation as a way to learn the model's policy.
+For this, the algorithm uses the Q-learning equation (Equation~\ref{eq:qlearning}) as a way to learn the model's policy.
 
 
 
@@ -274,12 +276,14 @@ For this, the algorithm uses Q-learning equation as a way to learn the model's p
 Q-learning is a learning algorithm that separates the policy being evaluated from the policy used to control.
 Sarsa --- its name comes from its parameters: $s,a,r,s',a'$ --- is an alternative to the Q-learning~\cite{graepel2004learningfight,stone2005reinforcement}
 working policy being evaluated together with policy used to control.
-Sarsa is based on the following equation:
-\[ Q(s,a) \leftarrow (1 - \alpha) Q(s,a) + \alpha[r + \gamma Q(s',a')] \]
-
-where $0 \leq \alpha \leq 1$ represents the learning-rate and $0 \leq \gamma \leq 1$ represents the discount factor for future rewards.
+Sarsa is based on Equation~\ref{eq:sarsa}, where $0 \leq \alpha \leq 1$ represents the learning-rate and $0 \leq \gamma \leq 1$ represents the discount factor for future rewards.
 The adjustment of the state-action pair $(s,a) \in SxA$ is to add a minor fix (depending on $\alpha$) to the old value.
 The fix is the immediate reward $r$ increased by future (discounted) value of state-action $\gamma Q(s',a')$.
+\begin{equation} \label{eq:sarsa}
+	Q(s,a) \leftarrow (1 - \alpha) Q(s,a) + \alpha[r + \gamma Q(s',a')]
+\end{equation}
+
+The full SARSA algorithm is presented in Algorithm~\ref{alg:sarsa}:
 
 \begin{algorithm}
 	\caption{SARSA}
@@ -304,8 +308,8 @@ The update function is performed after each transition from a non-terminal state
 If the state reached $s'$ is terminal, then $Q(s',a')$ is set to zero~\cite{sutton1998reinforcement}.
 The update function uses all elements of the tuple $\langle s,a,r,s',a' \rangle$, which represents a transition from current state-action pair to the next.
 
-There are cases where it can become very difficult to determine the set of actions available $A(s)$ for calculate $\gamma max_{a' \in A(s')}Q(s',a')$.
-In these cases, it is a good idea to choose Sarsa, since this requires no knowledge of $A(s)$~\cite{graepel2004learningfight}.
+There are cases where it may become very difficult to determine the set of actions available $A(s)$ for calculate $\gamma max_{a' \in A(s')}Q(s',a')$.
+In these cases, it is a good idea to choose SARSA, since this requires no knowledge of $A(s)$~\cite{graepel2004learningfight}.
 
 
 
@@ -313,24 +317,22 @@ In these cases, it is a good idea to choose Sarsa, since this requires no knowle
 \label{sec:exploration}
 
 So far, we have considered active RL agents that simply use the knowledge obtained so far to compute an optimal policy. 
-However, as we saw before, the initial policy biases learning towards the parts of the state-space through which an agent eventually explores, possibly leading the learning algorithm to converge on a policy that is optimal for the states visited so far, but not optimal overall (a local maximum). 
+However, as we saw before, the initial policy biases learning towards the parts of the state-space through which an agent eventually explores, possibly leading the learning algorithm to converge on a policy that is optimal for the states visited so far, but not overall optimal (a local maximum). 
 Therefore, active RL algorithms must include some mechanism to allow an agent to choose different actions from those computed with incomplete knowledge of the state-space. 
 Such a mechanism must seek to balance exploration of unknown states and exploitation of the currently available knowledge, allowing the agent both to take advantage of actions he knows are optimal, and exploring new actions~\cite{amato2010highlevel}. 
 
 In this work we use an exploration mechanism known as $\epsilon$-greedy~\cite{rodrigues2009dynamic}. 
-This mechanism has a probability $\epsilon$ to select a random action, and a probability $1 - \epsilon$ to select the optimal action learned so far --- that has the highest Q-value.
+This mechanism has a probability $\epsilon$ to select a random action, and a probability $1 - \epsilon$ to select the optimal action learned so far (one that has the highest Q-value).
 In order to make this selection we define a probability vector over the action set of the agent for each state, and use this probability vector to bias the choice of actions towards unexplored states.
 A probability vector is a vector containing probabilities for each of its actions.
-In the probability vector $x = (x_1, x_2, ..., x_n)$, the probability $x_i$ to choose the action $i$ is given by: 
-\[
-  x_i = \left\{
+In the probability vector $x = (x_1, x_2, ..., x_n)$, the probability $x_i$ to choose the action $i$ is given by Equation~\ref{eq:egreedy}, where $n$ is the number of actions in the set.
+\begin{equation} \label{eq:egreedy}
+	x_i = \left\{
   \begin{array}{ll}
     (1 - \epsilon) + (\epsilon / n), & \mbox{if $Q$ of $i$ is the highest} \\
     \epsilon / n, & \mbox{otherwise}
   \end{array}\right.
-\]
-
-where $n$ is the number of actions in the set.
+\end{equation}
 
 
 
@@ -366,3 +368,38 @@ Meta-learning represents the concept of learning to learn, and the meta-learning
 While learning at the object-level is responsible for accumulating experience about some task (e.g, take decisions in a game, medical diagnosis, fraud detection, etc.), learning at the meta-level is responsible for accumulating experience about learning algorithm itself. 
 If learning at object-level is not succeeding in improving or maintaining performance, the meta-level learner takes the responsibility to adapt the object-level, in order to make it succeed.
 In other words, meta-learning helps solve important problems in the application of machine learning algorithms~\cite{vilalta2004using}, especially in dynamic environments.
+
+
+
+\section{StarCraft}
+\label{sec:sc}
+
+\emph{Real-time strategy} (RTS) are computer games in which multiple players control teams of characters and resources over complex simulated worlds where their actions occur simultaneously (thus there is no turn-taking between players). 
+Players often compete over limited resources in order to strengthen their team and win the match. 
+As such, RTS games are an interesting field for AI, because the state space is huge, actions are concurrent, and part of the game state is hidden from each player. 
+Game-playing involves both the ability to manage each unit individually (\textit{micro-management}), and a high-level strategy for building construction and resource gathering (\textit{macro-management}). 
+
+\textit{StarCraft} is an RTS created by \textit{Blizzard Entertainment, Inc.}\footnote{
+StarCraft website in Blizzard Entertainment, Inc. \url{http://us.blizzard.com/pt-br/games/sc/}}.
+In this game, a player chooses between three different races to play (illustrated in Figure~\ref{fig:sc-races}), each of which having different units, buildings and capabilities, and uses these resources to battle other players, as shown in Figure~\ref{fig:sc-fight}. 
+% 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=400px]{images/sc-races}
+\caption{StarCraft: Brood War --- Race selection screen.}
+\label{fig:sc-races}
+\end{figure}
+% 
+The game consists on managing resources and building an army of different units to compete against the armies built by opposing players. 
+Units in the game are created from structures, and there are prerequisites for building other units and structures. 
+Consequently, one key aspect of the game is the order in which buildings and units are built, and good players have strategies to build them so that specific units are available at specific times for attack and defense moves. 
+Such building strategies are called \textit{build orders} or \textit{BOs}. 
+Strong BOs can put a player in a good position for the rest of the match.
+BOs usually need to be improvised from the first contact with the enemy units, since the actions become more dependent on knowledge obtained about the units and buildings available to the opponent~\cite{hagelback2012potential,churchill2011build}. 
+% 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=400px]{images/sc-fight}
+\caption{StarCraft: Brood War --- Batttle Scene.}
+\label{fig:sc-fight}
+\end{figure}

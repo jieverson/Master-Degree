@@ -87,7 +87,7 @@ It is worth noting that our method used very little computation time--it runs in
 \subsection{Applying Classical Q-Learning}
 \label{subsec:applying_ql}
 
-First of all, we have applied the classical Q-learning, with the purpose of compare with Meta-Level Reinforcement Learning methods.
+First of all, we have applied the classical Q-learning, with the purpose of comparing with Meta-Level Reinforcement Learning methods.
 
 \begin{figure}[ht]
 \centering
@@ -118,7 +118,7 @@ The results look similar to the last experiment, with some subtle differences:
 
 \item The classical Q-Learning method has reached higher Q-values (Figure~\ref{fig:q-learning_strategies_graphic}) such as $10$ on the execution $30$, and $12$ at execution $100$, while the Meta-Level strategy (Figure~\ref{fig:meta-learning_strategies_graphic}) has reached just $2$ on the execution $30$ and $4$ at execution $100$;
 
-\item Because of the lower Q-values, the Meta-Level method proved to respond faster to opponent changes. It can be see after the execution $30$. Using classical Q-Learning, the agent only discovered the new best strategy at the execution $53$, while the Meta-Level Reinforcement Learning discovered it at execution $40$: it learned twice as fast. If the opponent change was made after the execution $30$, this difference would be larger.
+\item Because of the lower Q-values, the Meta-Level method proved to respond faster to opponent changes. This can be see after the execution $30$. Using classical Q-Learning, the agent only discovered the new best strategy at the execution $53$, while the Meta-Level Reinforcement Learning discovered it at execution $40$: it learned twice as fast. If the opponent change was made after the execution $30$, this difference would be larger.
 \end{itemize}
 
 \begin{figure}[ht]
