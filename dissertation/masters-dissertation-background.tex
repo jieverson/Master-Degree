@@ -15,7 +15,7 @@ The first way to classify an environment is related to its observability.
 An environment can be unobservable, partially observable, or fully observable. 
 For example, the real world is partially observable, since each person can only perceive what is around his or herself, and usually only artificial environments are fully observable.
 % 
-The second way to classify an environment, is about its determinism.
+The second way to classify an environment is about its determinism.
 In general, an environment can be classified as stochastic or deterministic.
 In deterministic environments, an agent that performs an action $a$ in a state $s$ always result in a transition to the same state $s'$, no matter how many times the process is repeated, whereas in stochastic environments there can be multiple possible resulting states $s'$, each of which has a specific transition probability.
 % 
@@ -37,7 +37,7 @@ A crossword game is a single-agent environment whereas a chess game is a multi-a
 
 Agents need to make careful decisions, since today's decisions can impact on tomorrow's and tomorrow's on the next day.
 Markov Decision Process (MDP), also known as stochastic control problems~\cite{puterman1994markov}, is a model used to represent sequential decision making when its consequences are not deterministic.
-That is, MDP is a mathematical model used for modeling decision making where choices of actions are partly random and partly under the control of an agent.
+That is, MDP is a mathematical model used for modeling decision making where choices of actions are partially random and partially under the control of an agent.
 An MDP is represented by a tuple $\langle S, A, T, R\rangle$~\cite{graepel2004learningfight, taylor2011teachingmario} consisting of:
 
 1. a \textit{state space S} is a finite set of states $s \in S$.
@@ -133,7 +133,7 @@ By making these decisions and analyzing the results of each action, it can learn
 Reinforcement learning (RL) is a learning technique for agents acting in a stochastic, dynamic and partially observable environments, observing the reached states and the received rewards at each step~\cite{sutton1998reinforcement}. 
 Figure~\ref{fig:rl} illustrates the basic process of reinforcement learning, where the agent performs actions, and learns from their feedback. 
 An RL agent is assumed to select actions following a mapping of each possible environment state to an action. 
-This mapping of states to actions is called a \emph{policy}, and reinforcement learning algorithms aim to find the \emph{optimal policy} for an agent, that is, a policy that ensure long term optimal rewards for each state. 
+This mapping of states to actions is called a \emph{policy}, and reinforcement learning algorithms aim to find the \emph{optimal policy} for an agent, that is, a policy that ensures long term optimal rewards for each state. 
 
 \begin{figure}[ht]
 \centering
@@ -275,7 +275,7 @@ For this, the algorithm uses the Q-learning equation (Equation~\ref{eq:qlearning
 
 Q-learning is a learning algorithm that separates the policy being evaluated from the policy used to control.
 Sarsa --- its name comes from its parameters: $s,a,r,s',a'$ --- is an alternative to the Q-learning~\cite{graepel2004learningfight,stone2005reinforcement}
-working policy being evaluated together with policy used to control.
+working policy being evaluated together with the policy used to control.
 Sarsa is based on Equation~\ref{eq:sarsa}, where $0 \leq \alpha \leq 1$ represents the learning-rate and $0 \leq \gamma \leq 1$ represents the discount factor for future rewards.
 The adjustment of the state-action pair $(s,a) \in SxA$ is to add a minor fix (depending on $\alpha$) to the old value.
 The fix is the immediate reward $r$ increased by future (discounted) value of state-action $\gamma Q(s',a')$.

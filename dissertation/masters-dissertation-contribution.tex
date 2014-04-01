@@ -11,7 +11,7 @@ the following sections present our proposed solution.
 As we have seen in Section~\ref{sec:rl}, the parameters used in the update rule of reinforcement learning influence the way state values are computed, and ultimately how a policy is generated. 
 Therefore, the choice of parameters in reinforcement learning
 --- such as $\alpha$ ---
-can be crucial to success in learning~\cite{schweighofer2003meta}. 
+can be crucial to the success in learning~\cite{schweighofer2003meta}. 
 Consequently, there are different strategies to control and adjust these parameters. 
 
 When an agent does not know much about the environment, it needs to explore the environment with a high learning-rate to be able to quickly estimate the actual values of each state. 
@@ -129,10 +129,10 @@ Our approach to \textit{meta-level exploration policy} is shown in Algorithm~\re
 \end{algorithm}
 
 
-Meta-level exploration policy algorithm requires two parameters: learning-rate ($\alpha$) and a vector with all the possible actions ($V_a$).
+The Meta-level exploration policy algorithm requires two parameters: learning-rate ($\alpha$) and a vector with all the possible actions ($V_a$).
 First, it selects the max-action --- action with highest Q-value for current state --- in Line~\ref{meta-exploration:line:max_a}.
 Next it gets a random value between $0$ and $1$ (in Line~\ref{meta-exploration:line:rand}) using it as random factor.
-Than, in Line~\ref{meta-exploration:line:epsilon} it calculates the exploration-rate ($\epsilon$).
+Then, in Line~\ref{meta-exploration:line:epsilon} it calculates the exploration-rate ($\epsilon$).
 Finally, between lines~\ref{meta-exploration:line:return-begin} and~\ref{meta-exploration:line:return-end}, if the random factor was higher than exploration-rate, it returns the max-action; else, it just returns any possible action.
 
 
