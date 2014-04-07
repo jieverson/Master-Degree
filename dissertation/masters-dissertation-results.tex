@@ -3,6 +3,8 @@
 \label{chapter:results}
 
 In this section, we detail our implementation of meta-level reinforcement learning and its integration to the \emph{Starcraft} game, followed by our experiments and their results. 
+These results concern the complete implementation of this work.
+For results of our first partial implementation, please see~\cite{mypaper}.
 
 
 
@@ -42,7 +44,7 @@ Figure~\ref{fig:game-play} shows a screenshot of a game where one of the players
 \label{sec:rl-sc}
 
 Following the approach used by~\cite{amato2010highlevel}, our approach focuses on learning the best high-level strategy to use against an opponent. 
-We assume here that the agent will only play as Terran, and will be able to choose any one of the following strategies:
+We assume here that the agent will only play as Terran, and will be able to choose any one of the following strategies (units can be see at Figure~\ref{fig:units}):
 
 \begin{itemize}
 \item \textit{Marine Rush:} is a very simple Terran strategy that relies on quickly creating a specific number of workers (just enough to maintain the army) and then spending all the acquired resources on the creation of Marines (the cheapest Terran battle unit) and making an early attack with a large amount of units.
@@ -61,6 +63,13 @@ especially strong against non-organic units such as aircrafts, tanks and most of
 \item \textit{Terran Push:} consists of creating approximately five Siege Tanks and a large group of Marines, and moving these units together through the map in stages, stopping at regular intervals to regroup. 
 Given the long range of the Tank's weapons, opponents will often not perceive their approach until their units are under fire, however, this setup is vulnerable to air counterattack units. 
 \end{itemize}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=400px]{images/units}
+\caption{Most common Terran Units: SCV, Marine, Wraith, Medic and Siege Tank}
+\label{fig:units}
+\end{figure}
 
 After each game, the agent observes the end result (victory or defeat), and uses this feedback to learn the best strategy. 
 If the game is played again, the learning continues, so we can choose the strategy with the highest value for the current situation. 

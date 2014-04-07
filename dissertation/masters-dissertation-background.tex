@@ -211,6 +211,49 @@ In multi-agent systems, where the learning agent models the behavior of all othe
 
 
 
+\subsection{SARSA}
+\label{subsec:sarsa}
+
+Q-learning is a learning algorithm that separates the policy being evaluated from the policy used to control.
+Sarsa --- its name comes from its parameters: $s,a,r,s',a'$ --- is an alternative to the Q-learning~\cite{graepel2004learningfight,stone2005reinforcement}
+working policy being evaluated together with the policy used to control.
+Sarsa is based on Equation~\ref{eq:sarsa}, where $0 \leq \alpha \leq 1$ represents the learning-rate and $0 \leq \gamma \leq 1$ represents the discount factor for future rewards.
+The adjustment of the state-action pair $(s,a) \in SxA$ is to add a minor fix (depending on $\alpha$) to the old value.
+The fix is the immediate reward $r$ increased by future (discounted) value of state-action $\gamma Q(s',a')$.
+\begin{equation} \label{eq:sarsa}
+	Q(s,a) \leftarrow (1 - \alpha) Q(s,a) + \alpha[r + \gamma Q(s',a')]
+\end{equation}
+
+The full SARSA algorithm is presented in Algorithm~\ref{alg:sarsa}:
+
+\begin{algorithm}
+	\caption{SARSA}
+	\label{alg:sarsa}
+	\begin{algorithmic}[1]
+		\STATE initialize $Q(s,a)$ arbitrarily
+		\FOR{each episode}
+			\STATE initialize $s$
+			\STATE $a \gets chooseByQValue(s)$
+			\FOR{each step of episode}
+				\STATE $r \gets getReward(s,s')$
+				\STATE $a' \gets chooseByQValue(s')$
+				\STATE $Q(s,a) \gets (1 - \alpha) Q(s,a) + \alpha[r + \gamma Q(s',a')]$
+				\STATE $s \gets s'$
+				\STATE $a \gets a'$
+			\ENDFOR
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+
+The update function is performed after each transition from a non-terminal state $s$ (in other words, immediately after the execution of an action which does not reach the final state).
+If the state reached $s'$ is terminal, then $Q(s',a')$ is set to zero~\cite{sutton1998reinforcement}.
+The update function uses all elements of the tuple $\langle s,a,r,s',a' \rangle$, which represents a transition from current state-action pair to the next.
+
+There are cases where it may become very difficult to determine the set of actions available $A(s)$ for calculate $\gamma max_{a' \in A(s')}Q(s',a')$.
+In these cases, it is a good idea to choose SARSA, since this requires no knowledge of $A(s)$~\cite{graepel2004learningfight}.
+
+
+
 \subsection{Dyna-Q}
 \label{subsec:dynaq}
 
@@ -218,7 +261,7 @@ Learning a model means to learn the transition probabilities, the reward values 
 It is possible to find optimal policies when the parameters of the model are known.
 One can learn the parameters of a model through the simulation of a template.
 This model can be evaluated by using passive reinforcement learning, as seen previously (Section~\ref{sec:rl}).
-Dyna-Q~\cite{sutton1991dyna} is an approach that first builds a correct model, then finds the policies through this model~\cite{kaelbling1996reinforcement}.
+Dyna-Q~\cite{sutton1991dyna} is a model-based approach that first builds a correct model, then finds the policies through this model~\cite{kaelbling1996reinforcement}.
 This approach first learns the parameters of a model, and then uses this definition of parameters to calculate the optimal policy learned about the model~\cite{amato2010highlevel}.
 
 Dyna-Q can use the model to generate learning experiences --- simulate the learning within a built model --- and learn the Q-values more quickly than simply applying Q-learning.
@@ -266,50 +309,59 @@ First it chooses a state $s'$ that was previously visited ($randomPreviouslySeen
 After it chooses an action $a'$ that has already been performed on state $s'$ ($randomPreviouslyTakenA$ function).
 Based on this model, a new state $s''$ is simulated ($sampleFromModel$ function).
 Finally, the reward for executing action $a'$ at state $s'$ is given by $fromModel$ function of the algorithm, and these values are used to update the appropriate Q-value ($Q(s',a')$).
-For this, the algorithm uses the Q-learning equation (Equation~\ref{eq:qlearning}) as a way to learn the model's policy.
+For this, the algorithm makes use the Q-learning equation (Equation~\ref{eq:qlearning}) as a way to learn the model's policy.
 
 
 
-\subsection{SARSA}
-\label{subsec:sarsa}
+%\subsection{Learning in Non-Stationary Environments}
+\subsection{Prioritized Sweeping}
+\label{subsec:ps}
 
-Q-learning is a learning algorithm that separates the policy being evaluated from the policy used to control.
-Sarsa --- its name comes from its parameters: $s,a,r,s',a'$ --- is an alternative to the Q-learning~\cite{graepel2004learningfight,stone2005reinforcement}
-working policy being evaluated together with the policy used to control.
-Sarsa is based on Equation~\ref{eq:sarsa}, where $0 \leq \alpha \leq 1$ represents the learning-rate and $0 \leq \gamma \leq 1$ represents the discount factor for future rewards.
-The adjustment of the state-action pair $(s,a) \in SxA$ is to add a minor fix (depending on $\alpha$) to the old value.
-The fix is the immediate reward $r$ increased by future (discounted) value of state-action $\gamma Q(s',a')$.
-\begin{equation} \label{eq:sarsa}
-	Q(s,a) \leftarrow (1 - \alpha) Q(s,a) + \alpha[r + \gamma Q(s',a')]
+When dealing with non-stationary environments, model-free RL approaches need to continuously relearn everything, since that the policy calculated for a given environment is no longer valid after dynamics change. 
+This requires a readjustment phase, which drops the performance of learning and also forces the algotithm to relearn policies even for previously experienced environment dynamics~\cite{de2006reinforcement}.
+Beyond Dyna-Q, there are other model-based alternatives to deal with learning.
+Prioritized Sweeping~\cite{moore1993prioritized} is a model-based alternative that works similar to Dyna-Q.
+It updates more than one state value per iteration making direct use of state values, instead of Q-values.
+
+Prioritized Sweeping is designed to perform the same task as Gauss-Seidel iteration while using careful bookkeeping to concentrate all computational effort on the most interesting parts of the system.
+To determine the states that should have its values updated after each iteration, Priorized Sweeping make use of a priority queue, where the states priorities are stored and initialized as 0.
+Each state maintains its predecessors: all states with at least one non-zero transition probability to it under any action.
+After each environment observation, the transition probabilities are updated.
+Then state $i$ is promoted to the top of the priority queue. 
+Next, we continue to process further states from the top of the queue. 
+Each state that is processed may result in the addition or promotion of its predecessors within the queue. 
+This loop continues for a preset number of processing steps or until the queue empties.
+Prioritized Sweeping uses the queue to determine which states are likely to be more interesting.
+At each iteration, the transition probabilities $T$ and the reward function $R$ are estimated.
+The transition probabilities $T$ can be usually updated by calculating the maximum likelihood probability~\cite{de2006reinforcement}.
+Instead of storing the transition probabilities in the form $T(s,a,s')$, Prioritized Sweeping stores the number of times the transition $(s,a,s')$ occurred and the total number of times the situation $(s,a)$ has been reached.
+
+\begin{comment}
+Knowing this, $T$ is calculated as presented at Equation~\ref{eq:ps}.
+
+\begin{equation} \label{eq:ps}
+	T = \frac{[(s,a,s')]}{[(s,a)]}
 \end{equation}
 
-The full SARSA algorithm is presented in Algorithm~\ref{alg:sarsa}:
+Let us look at the formal algorithm in Algorithm~\ref{alg:ps}. 
+On entry it assumes the most recent state transition was from $i_{recent}$.
 
-\begin{algorithm}
-	\caption{SARSA}
-	\label{alg:sarsa}
+\begin{algorithm}[H]
+	\caption{Prioritized Sweeping}
+	\label{alg:ps}
 	\begin{algorithmic}[1]
-		\STATE initialize $Q(s,a)$ arbitrarily
-		\FOR{each episode}
-			\STATE initialize $s$
-			\STATE $a \gets chooseByQValue(s)$
-			\FOR{each step of episode}
-				\STATE $r \gets getReward(s,s')$
-				\STATE $a' \gets chooseByQValue(s')$
-				\STATE $Q(s,a) \gets (1 - \alpha) Q(s,a) + \alpha[r + \gamma Q(s',a')]$
-				\STATE $s \gets s'$
-				\STATE $a \gets a'$
+		\STATE Promote state $i_{recent}$ to top of priority queue;
+		\WHILE{we are allowed further processing and priority queue not empty}
+			\STATE Remove the top state from the priority queue. Call it $i$;
+			\STATE $\Delta_{max} \gets 0$
+			\FOR{$k \in TERMS$} 
+				\STATE XXX
 			\ENDFOR
-		\ENDFOR
+		\ENDWHILE
 	\end{algorithmic}
 \end{algorithm}
 
-The update function is performed after each transition from a non-terminal state $s$ (in other words, immediately after the execution of an action which does not reach the final state).
-If the state reached $s'$ is terminal, then $Q(s',a')$ is set to zero~\cite{sutton1998reinforcement}.
-The update function uses all elements of the tuple $\langle s,a,r,s',a' \rangle$, which represents a transition from current state-action pair to the next.
-
-There are cases where it may become very difficult to determine the set of actions available $A(s)$ for calculate $\gamma max_{a' \in A(s')}Q(s',a')$.
-In these cases, it is a good idea to choose SARSA, since this requires no knowledge of $A(s)$~\cite{graepel2004learningfight}.
+\end{comment}
 
 
 
@@ -381,25 +433,18 @@ Game-playing involves both the ability to manage each unit individually (\textit
 
 \textit{StarCraft} is an RTS created by \textit{Blizzard Entertainment, Inc.}\footnote{
 StarCraft website in Blizzard Entertainment, Inc. \url{http://us.blizzard.com/pt-br/games/sc/}}.
-In this game, a player chooses between three different races to play (illustrated in Figure~\ref{fig:sc-races}), each of which having different units, buildings and capabilities, and uses these resources to battle other players, as shown in Figure~\ref{fig:sc-fight}. 
-% 
-\begin{figure}[ht]
+In this game, a player chooses between three different races to play (illustrated in Figure~\ref{fig:sc-races}), each of which having different units, buildings and capabilities, and uses these resources to battle other players.
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=400px]{images/sc-races}
-\caption{StarCraft: Brood War --- Race selection screen.}
+\caption{The different races in StarCraft.}
 \label{fig:sc-races}
 \end{figure}
-% 
+
 The game consists on managing resources and building an army of different units to compete against the armies built by opposing players. 
 Units in the game are created from structures, and there are prerequisites for building other units and structures. 
 Consequently, one key aspect of the game is the order in which buildings and units are built, and good players have strategies to build them so that specific units are available at specific times for attack and defense moves. 
 Such building strategies are called \textit{build orders} or \textit{BOs}. 
 Strong BOs can put a player in a good position for the rest of the match.
-BOs usually need to be improvised from the first contact with the enemy units, since the actions become more dependent on knowledge obtained about the units and buildings available to the opponent~\cite{hagelback2012potential,churchill2011build}. 
-% 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=400px]{images/sc-fight}
-\caption{StarCraft: Brood War --- Batttle Scene.}
-\label{fig:sc-fight}
-\end{figure}
+BOs usually need to be improvised from the first contact with the enemy units, since the actions become more dependent on knowledge obtained about the units and buildings available to the opponent~\cite{hagelback2012potential,churchill2011build}.
