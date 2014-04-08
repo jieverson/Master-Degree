@@ -320,29 +320,29 @@ For this, the algorithm makes use the Q-learning equation (Equation~\ref{eq:qlea
 When dealing with non-stationary environments, model-free RL approaches need to continuously relearn everything, since that the policy calculated for a given environment is no longer valid after dynamics change. 
 This requires a readjustment phase, which drops the performance of learning and also forces the algotithm to relearn policies even for previously experienced environment dynamics~\cite{de2006reinforcement}.
 Beyond Dyna-Q, there are other model-based alternatives to deal with learning.
-Prioritized Sweeping~\cite{moore1993prioritized} is a model-based alternative that works similar to Dyna-Q.
-It updates more than one state value per iteration making direct use of state values, instead of Q-values.
 
-Prioritized Sweeping is designed to perform the same task as Gauss-Seidel iteration while using careful bookkeeping to concentrate all computational effort on the most interesting parts of the system.
-To determine the states that should have its values updated after each iteration, Priorized Sweeping make use of a priority queue, where the states priorities are stored and initialized as 0.
-Each state maintains its predecessors: all states with at least one non-zero transition probability to it under any action.
-After each environment observation, the transition probabilities are updated.
-Then state $i$ is promoted to the top of the priority queue. 
-Next, we continue to process further states from the top of the queue. 
-Each state that is processed may result in the addition or promotion of its predecessors within the queue. 
-This loop continues for a preset number of processing steps or until the queue empties.
-Prioritized Sweeping uses the queue to determine which states are likely to be more interesting.
+Prioritized Sweeping~\cite{moore1993prioritized} is a model-based alternative that works similar to Dyna-Q, except for the fact that it learns and estimates the current policy instead of its rewards.
+It updates more than one state value per iteration making direct use of state values, instead of Q-values.
 At each iteration, the transition probabilities $T$ and the reward function $R$ are estimated.
 The transition probabilities $T$ can be usually updated by calculating the maximum likelihood probability~\cite{de2006reinforcement}.
+The reward function $R$ can be estimated according to the most probable state.
 Instead of storing the transition probabilities in the form $T(s,a,s')$, Prioritized Sweeping stores the number of times the transition $(s,a,s')$ occurred and the total number of times the situation $(s,a)$ has been reached.
-
-\begin{comment}
-Knowing this, $T$ is calculated as presented at Equation~\ref{eq:ps}.
+This way, to compute the maximum likelihood probability, $T$ is calculated as presented in Equation~\ref{eq:ps}.
 
 \begin{equation} \label{eq:ps}
 	T = \frac{[(s,a,s')]}{[(s,a)]}
 \end{equation}
 
+%To determine the states that should have its values updated after each iteration, Priorized Sweeping make use of a priority queue, where the states priorities are stored and initialized as 0.
+%Each state maintains its predecessors: all states with at least one non-zero transition probability to it under any action.
+%After each environment observation, the transition probabilities $T$ are updated.
+%Then a state $i$ is promoted to the top of the priority queue. 
+%Next, we continue to process further states from the top of the queue. 
+%Each state that is processed may result in the addition or promotion of its predecessors within the queue. 
+%This loop continues for a preset number of processing steps or until the queue empties.
+%Prioritized Sweeping uses the queue to determine which states are likely to be more interesting.
+
+\begin{comment}
 Let us look at the formal algorithm in Algorithm~\ref{alg:ps}. 
 On entry it assumes the most recent state transition was from $i_{recent}$.
 
@@ -360,7 +360,6 @@ On entry it assumes the most recent state transition was from $i_{recent}$.
 		\ENDWHILE
 	\end{algorithmic}
 \end{algorithm}
-
 \end{comment}
 
 
