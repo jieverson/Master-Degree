@@ -30,6 +30,7 @@
 %\usepackage{epstopdf}
 %\usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage[final]{pdfpages}
 \usepackage[implicit=false]{hyperref}
 
 %%% The "real" document content comes below...
@@ -122,13 +123,10 @@ Esta abordagem é validada de forma empírica, utilizando seleção de estratég
 %\bibliographystyle{ppgcc-num}
 \bibliography{cites}
 
-%----------------------------------------------------------------
-% Após \appendix, se iniciam os capítulos de Apêndice, com
-% numeração alfabética.
-%----------------------------------------------------------------
-%\appendix
-%\chapter{Meu primeiro apêndice}
-%\chapter{My second appendix}
+\appendix
+\chapter{Paper accepted in SBGames conference on Computing 2013}
+\label{appendix:paper}
+\includepdf[pages={1-8}]{../paper/sbgames2013/sbgames-metalearning.pdf}
 
 %----------------------------------------------------------------
 % Aqui vão os "capítulos" de anexos. Cada anexo deve
