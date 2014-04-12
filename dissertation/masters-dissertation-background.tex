@@ -313,7 +313,6 @@ For this, the algorithm makes use the Q-learning equation (Equation~\ref{eq:qlea
 
 
 
-%\subsection{Learning in Non-Stationary Environments}
 \subsection{Prioritized Sweeping}
 \label{subsec:ps}
 
@@ -324,43 +323,14 @@ Beyond Dyna-Q, there are other model-based alternatives to deal with learning.
 Prioritized Sweeping~\cite{moore1993prioritized} is a model-based alternative that works similar to Dyna-Q, except for the fact that it learns and estimates the current policy instead of its rewards.
 It updates more than one state value per iteration making direct use of state values, instead of Q-values.
 At each iteration, the transition probabilities $T$ and the reward function $R$ are estimated.
-The transition probabilities $T$ can be usually updated by calculating the maximum likelihood probability~\cite{de2006reinforcement}.
+The transition probabilities $T$ can usually be updated by calculating the maximum likelihood probability~\cite{de2006reinforcement}.
 The reward function $R$ can be estimated according to the most probable state.
 Instead of storing the transition probabilities in the form $T(s,a,s')$, Prioritized Sweeping stores the number of times the transition $(s,a,s')$ occurred and the total number of times the situation $(s,a)$ has been reached.
-This way, to compute the maximum likelihood probability, $T$ is calculated as presented in Equation~\ref{eq:ps}.
+Thus, to compute the maximum likelihood probability, $T$ is calculated as presented in Equation~\ref{eq:ps}.
 
 \begin{equation} \label{eq:ps}
 	T = \frac{[(s,a,s')]}{[(s,a)]}
 \end{equation}
-
-%To determine the states that should have its values updated after each iteration, Priorized Sweeping make use of a priority queue, where the states priorities are stored and initialized as 0.
-%Each state maintains its predecessors: all states with at least one non-zero transition probability to it under any action.
-%After each environment observation, the transition probabilities $T$ are updated.
-%Then a state $i$ is promoted to the top of the priority queue. 
-%Next, we continue to process further states from the top of the queue. 
-%Each state that is processed may result in the addition or promotion of its predecessors within the queue. 
-%This loop continues for a preset number of processing steps or until the queue empties.
-%Prioritized Sweeping uses the queue to determine which states are likely to be more interesting.
-
-\begin{comment}
-Let us look at the formal algorithm in Algorithm~\ref{alg:ps}. 
-On entry it assumes the most recent state transition was from $i_{recent}$.
-
-\begin{algorithm}[H]
-	\caption{Prioritized Sweeping}
-	\label{alg:ps}
-	\begin{algorithmic}[1]
-		\STATE Promote state $i_{recent}$ to top of priority queue;
-		\WHILE{we are allowed further processing and priority queue not empty}
-			\STATE Remove the top state from the priority queue. Call it $i$;
-			\STATE $\Delta_{max} \gets 0$
-			\FOR{$k \in TERMS$} 
-				\STATE XXX
-			\ENDFOR
-		\ENDWHILE
-	\end{algorithmic}
-\end{algorithm}
-\end{comment}
 
 
 
