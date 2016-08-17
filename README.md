@@ -1,8 +1,9 @@
-Master-Degree
-=============
+# Master-Degree
 
 My master's degree dissertation and presentation.
 
-Jiéverson Maissiat
-contact@jieverson.com
-Craftbox
+### see presentation
+https://goo.gl/z2YibX
+
+### download dissertation
+https://goo.gl/Hs8k3j
